@@ -17,6 +17,9 @@ enum DeviceState {
 /// Should hold milliseconds
 typedef unsigned long DeviceTime;
 
+// TODO
+// typedef unsigned char KeyID[10];
+
 class StateManager
 {
 public:
@@ -39,7 +42,7 @@ public:
     void setupDidFinish();
 
     // TODO
-    // void authorize(byte[10]);
+    // void authorize(KeyID);
 
 private:
     DeviceState state;

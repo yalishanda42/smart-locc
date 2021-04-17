@@ -62,7 +62,12 @@ void StateManager::setupDidFinish() {
     setState(IDLE);
 }
 
-void StateManager::setState(DeviceState newState) {
+// void StateManager::authorize(KeyID id) {
+
+// }
+
+void StateManager::setState(DeviceState newState)
+{
     state = newState;
     lastStateUpdateTime = currentTime;
 }
