@@ -1,6 +1,8 @@
 #ifndef __STATE_MANAGER__HPP__
 #define __STATE_MANAGER__HPP__
 
+#include "KeyPersistenceService.hpp"
+
 enum DeviceState {
     INITIAL,
 
@@ -16,9 +18,6 @@ enum DeviceState {
 
 /// Should hold milliseconds
 typedef unsigned long DeviceTime;
-
-// TODO
-// typedef unsigned char KeyID[10];
 
 class StateManager
 {
@@ -41,13 +40,14 @@ public:
 
     void setupDidFinish();
 
-    // TODO
-    // void authorize(KeyID);
+    void authorize(KeyID);
 
 private:
     DeviceState state;
     DeviceTime lastStateUpdateTime;
     DeviceTime currentTime;
+
+    KeyPersistenceService keyService;
 
     void setState(DeviceState);
 
