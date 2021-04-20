@@ -1,0 +1,18 @@
+name: Build
+
+on:
+  push:
+    branches: [ master ]
+  pull_request:
+    branches: [ master ]
+
+jobs:
+  build-esp8266:
+
+    runs-on: ubuntu-latest
+
+    steps:
+    - uses: actions/checkout@v2
+    - name: ESP8266-RTOS-SDK (IDF Style) Build
+      uses: nsfilho/esp8266-rtos-sdk@v2
+
