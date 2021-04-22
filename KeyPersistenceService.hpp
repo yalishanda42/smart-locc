@@ -21,9 +21,9 @@ class KeyPersistenceService
 public:
     KeyPersistenceService();
 
-    bool keyIsAuthorized(KeyID) const;
-    bool keyIsAdmin(KeyID) const;
-    bool addKey(KeyID) const;
+    bool keyIsAuthorized(const KeyID&) const;
+    bool keyIsAdmin(const KeyID&) const;
+    bool addKey(const KeyID&) const;
 };
 
 #endif

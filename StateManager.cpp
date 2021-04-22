@@ -26,7 +26,7 @@ DeviceState StateManager::getState() const {
     return state;
 }
 
-const char* StateManager::getStateMessage() const {
+String StateManager::getStateMessage() const {
     // TODO: Finaliza texts
     switch (state)
     {
@@ -63,7 +63,7 @@ void StateManager::setupDidFinish() {
     setState(IDLE);
 }
 
-void StateManager::authorize(KeyID id) {
+void StateManager::authorize(const KeyID& id) {
     if (state == IDLE) {
         bool keyIsAllowed = keyService.keyIsAuthorized(id);
         setState(keyIsAllowed ? AUTHORIZED : AUTH_FAILURE);

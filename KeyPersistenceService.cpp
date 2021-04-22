@@ -44,7 +44,7 @@ KeyPersistenceService::KeyPersistenceService() : numberOfKeys(0) {
     }
 }
 
-bool KeyPersistenceService::keyIsAuthorized(KeyID key) const {
+bool KeyPersistenceService::keyIsAuthorized(const KeyID& key) const {
     unsigned int addr = INITGUARD_LENGTH + 1;
     KeyID currentKey = { 0 };
     for (unsigned int i = 0; i < numberOfKeys; i++) {
@@ -60,12 +60,12 @@ bool KeyPersistenceService::keyIsAuthorized(KeyID key) const {
     return false;
 }
 
-bool KeyPersistenceService::keyIsAdmin(KeyID) const {
+bool KeyPersistenceService::keyIsAdmin(const KeyID&) const {
     // TODO
     return false;
 }
 
-bool KeyPersistenceService::addKey(KeyID) const {
+bool KeyPersistenceService::addKey(const KeyID&) const {
     // TODO
     return true;
 }
