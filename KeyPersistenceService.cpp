@@ -18,7 +18,7 @@ bool KeyID::operator==(const KeyID& rhs) const {
 const char KeyPersistenceService::INITGUARD[INITGUARD_LENGTH + 1] = "key";
 
 KeyPersistenceService::KeyPersistenceService() : numberOfKeys(0) {
-    EEPROM.begin(EEPROM.length());
+    EEPROM.begin(EEPROM_LENGTH);
 
     // To prevent reading and trusting uninitialized data
     // we should ensure that the first INITGUARD_LENGTH number of
@@ -42,6 +42,8 @@ KeyPersistenceService::KeyPersistenceService() : numberOfKeys(0) {
 
         // TODO: Add admin keys here
 
+        EEPROM.commit();
+
     } else {
         numberOfKeys = EEPROM.read(INITGUARD_LENGTH);
     }
@@ -57,14 +59,16 @@ bool KeyPersistenceService::keyIsAdmin(const KeyID& key) const {
 
 bool KeyPersistenceService::addKey(const KeyID& key) {
     unsigned int usedEEPROMSize = INITGUARD_LENGTH + 1 + (numberOfKeys * KEY_SIZE_BYTES);
-    if (EEPROM.length() - usedEEPROMSize < KEY_SIZE_BYTES) {
+    if (EEPROM_LENGTH - usedEEPROMSize < KEY_SIZE_BYTES) {
         // No enough space available for a new key!
         return false;
     }
 
     EEPROM.put(usedEEPROMSize, key);
     numberOfKeys++;
-    return true;
+    EEPROM.write(INITGUARD_LENGTH, numberOfKeys);
+
+    return EEPROM.commit();
 }
 
 bool KeyPersistenceService::keyExistsInFirstNEntries(const KeyID& key, unsigned int N) const {

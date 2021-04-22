@@ -13,10 +13,12 @@ struct KeyID {
 
 class KeyPersistenceService
 {
-    static const int INITGUARD_LENGTH = 3;
+    static const unsigned int EEPROM_LENGTH = 512;
+
+    static const unsigned int INITGUARD_LENGTH = 3;
     static const char INITGUARD[INITGUARD_LENGTH + 1];
 
-    static const int NUMBER_OF_ADMIN_KEYS = 2;
+    static const unsigned int NUMBER_OF_ADMIN_KEYS = 2;
 
     unsigned char numberOfKeys;
 
