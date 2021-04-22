@@ -21,10 +21,10 @@ KeyPersistenceService::KeyPersistenceService() : numberOfKeys(0) {
     EEPROM.begin(EEPROM.length());
 
     // To prevent reading and trusting uninitialized data
-    // we should ensure that the first 3 bytes of EEPROM are always
-    // the same and set by our program.
+    // we should ensure that the first INITGUARD_LENGTH number of
+    // bytes of EEPROM are always the same and set by our program.
     //
-    // The byte after the password should hold the number of keys persisted.
+    // The one byte after the password should hold the number of keys persisted.
 
     bool isInitializedProperly = true;
     for (unsigned int i = 0; i < INITGUARD_LENGTH; i++) {
