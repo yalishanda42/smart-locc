@@ -39,14 +39,38 @@ KeyPersistenceService::KeyPersistenceService() : numberOfKeys(0) {
             EEPROM.write(i, INITGUARD[i]);
         }
         EEPROM.write(INITGUARD_LENGTH, numberOfKeys);
+
+        // TODO: Add admin keys here
+
     } else {
         numberOfKeys = EEPROM.read(INITGUARD_LENGTH);
     }
 }
 
 bool KeyPersistenceService::keyIsAuthorized(const KeyID& key) const {
+    return keyExistsInFirstNEntries(key, numberOfKeys);
+}
+
+bool KeyPersistenceService::keyIsAdmin(const KeyID& key) const {
+    return keyExistsInFirstNEntries(key, NUMBER_OF_ADMIN_KEYS);
+}
+
+bool KeyPersistenceService::addKey(const KeyID& key) {
+    unsigned int usedEEPROMSize = INITGUARD_LENGTH + 1 + (numberOfKeys * KEY_SIZE_BYTES);
+    if (EEPROM.length() - usedEEPROMSize < KEY_SIZE_BYTES) {
+        // No enough space available for a new key!
+        return false;
+    }
+
+    EEPROM.put(usedEEPROMSize, key);
+    numberOfKeys++;
+    return true;
+}
+
+bool KeyPersistenceService::keyExistsInFirstNEntries(const KeyID& key, unsigned int N) const {
     unsigned int addr = INITGUARD_LENGTH + 1;
-    KeyID currentKey = { 0 };
+    KeyID currentKey = {0};
+
     for (unsigned int i = 0; i < numberOfKeys; i++) {
         EEPROM.get(addr, currentKey);
 
@@ -58,14 +82,4 @@ bool KeyPersistenceService::keyIsAuthorized(const KeyID& key) const {
     }
 
     return false;
-}
-
-bool KeyPersistenceService::keyIsAdmin(const KeyID&) const {
-    // TODO
-    return false;
-}
-
-bool KeyPersistenceService::addKey(const KeyID&) const {
-    // TODO
-    return true;
 }
