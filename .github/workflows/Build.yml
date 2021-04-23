@@ -15,7 +15,7 @@ jobs:
           - arduino-platform: "esp8266:esp8266"
             fqbn: "esp8266:esp8266:nodemcu"
           - arduino-platform: "esp32:esp32"
-            fqbn: "esp32:esp32:esp32"
+            fqbn: "esp32:esp32:esp32doit-devkit-v1"
  
     runs-on: ubuntu-latest
  
