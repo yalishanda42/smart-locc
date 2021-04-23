@@ -35,6 +35,9 @@ jobs:
         run: |
           arduino-cli core update-index
           arduino-cli core install ${{ matrix.arduino-platform }}
+          
+      - name: Install libraries
+        run: ./install-libs.sh
  
       - name: Verify Sketch
         run: arduino-cli compile --fqbn ${{ matrix.fqbn }} ./smart-locc.ino
