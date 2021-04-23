@@ -5,14 +5,37 @@ on:
     branches: [ master ]
   pull_request:
     branches: [ master ]
-
+ 
 jobs:
-  build-esp8266:
-
+  build:
+    strategy:
+      matrix:
+        arduino-platform: ["esp8266:esp8266", "esp32:esp32"]
+        include:
+          - arduino-platform: "esp8266:esp8266"
+            fqbn: "esp8266:esp8266:nodemcu"
+          - arduino-platform: "esp32:esp32"
+            fqbn: "esp32:esp32:esp32"
+ 
     runs-on: ubuntu-latest
-
+ 
     steps:
-    - uses: actions/checkout@v2
-    - name: ESP8266-RTOS-SDK (IDF Style) Build
-      uses: nsfilho/esp8266-rtos-sdk@v2
+      - name: Checkout
+        uses: actions/checkout@master
+ 
+      - name: Setup Arduino CLI
+        uses: arduino/setup-arduino-cli@v1.1.1
+        
+      - name: Config Arduino CLI
+        run: |
+          arduino-cli config init
+          arduino-cli config add board_manager.additional_urls "https://arduino.esp8266.com/stable/package_esp8266com_index.json" "https://raw.githubusercontent.com/espressif/arduino-esp32/gh-pages/package_esp32_index.json"
+        
+      - name: Install cores
+        run: |
+          arduino-cli core update-index
+          arduino-cli core install ${{ matrix.arduino-platform }}
+ 
+      - name: Verify Sketch
+        run: arduino-cli compile --fqbn ${{ matrix.fqbn }} ./smart-locc.ino
 
