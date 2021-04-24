@@ -10,9 +10,18 @@ StateManager stateManager;
 void setup() {
     Serial.begin(115200);
     Serial.println("Booting up...");
+
+    // Just for EEPROM debug purposes:
+    Serial.print((char)EEPROM.read(0));
+    Serial.print((char)EEPROM.read(1));
+    Serial.print((char)EEPROM.read(2));
+    Serial.print(" ");
+    Serial.println((int)EEPROM.read(3));
+
     // TODO
     // ...
     //
+
     stateManager.setupDidFinish();
     Serial.println("Booted up.");
 }
