@@ -1,6 +1,6 @@
 #include "KeyPersistenceService.hpp"
 
-KeyID::KeyID(unsigned char bytes[KEY_SIZE_BYTES]) {
+KeyID::KeyID(const unsigned char bytes[KEY_SIZE_BYTES]) {
     for (unsigned int i = 0; i < KEY_SIZE_BYTES; i++) {
         this->bytes[i] = bytes[i];
     }
@@ -16,6 +16,11 @@ bool KeyID::operator==(const KeyID& rhs) const {
 }
 
 const char KeyPersistenceService::INITGUARD[INITGUARD_LENGTH + 1] = "key";
+
+const unsigned char KeyPersistenceService::ADMIN_KEYS[NUMBER_OF_ADMIN_KEYS][KEY_SIZE_BYTES] = {
+    {0xFF, 0xFF, 0xFF, 0xFF, 0xFF, 0xFF, 0xFF, 0xFF, 0xFF, 0xFF, 0xFF, 0xFF},
+    {0xCC, 0xCC, 0xCC, 0xCC, 0xCC, 0xCC, 0xCC, 0xCC, 0xCC, 0xCC, 0xCC, 0xCC},
+};
 
 KeyPersistenceService::KeyPersistenceService() : numberOfKeys(0) {
     EEPROM.begin(EEPROM_LENGTH);
@@ -40,13 +45,11 @@ KeyPersistenceService::KeyPersistenceService() : numberOfKeys(0) {
         }
         EEPROM.write(INITGUARD_LENGTH, numberOfKeys);
 
-        // TODO: Add admin keys here
-        unsigned char adminKey1[12] = {0xFF, 0xFF, 0xFF, 0xFF, 0xFF, 0xFF, 0xFF, 0xFF, 0xFF, 0xFF, 0xFF, 0xFF};
-        unsigned char adminKey2[12] = {0xCC, 0xCC, 0xCC, 0xCC, 0xCC, 0xCC, 0xCC, 0xCC, 0xCC, 0xCC, 0xCC, 0xCC};
-        addKey(adminKey1);
-        addKey(adminKey2);
+        for (unsigned int i = 0; i < NUMBER_OF_ADMIN_KEYS; i++) {
+            addKey(ADMIN_KEYS[i]);
+        }
 
-        // EEPROM.commit();
+        // no need to say `EEPROM.commit()` here because `addKey()` does it
 
     } else {
         numberOfKeys = EEPROM.read(INITGUARD_LENGTH);
