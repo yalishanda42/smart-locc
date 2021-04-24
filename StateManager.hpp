@@ -4,18 +4,18 @@
 #include "KeyPersistenceService.hpp"
 #include <Arduino.h>
 
-    enum DeviceState {
-        INITIAL,
+enum DeviceState {
+    INITIAL,
 
-        IDLE,
+    IDLE,
 
-        AUTHORIZED,
-        AUTH_FAILURE,
+    AUTHORIZED,
+    AUTH_FAILURE,
 
-        WAITING_ADMIN_AUTH,
-        WAITING_NEW_KEY_AUTH,
-        NEW_KEY_AUTH_SUCCESS,
-    };
+    WAITING_ADMIN_AUTH,
+    WAITING_NEW_KEY_AUTH,
+    NEW_KEY_AUTH_SUCCESS,
+};
 
 /// Should hold milliseconds
 typedef unsigned long DeviceTime;
