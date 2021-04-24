@@ -41,8 +41,12 @@ KeyPersistenceService::KeyPersistenceService() : numberOfKeys(0) {
         EEPROM.write(INITGUARD_LENGTH, numberOfKeys);
 
         // TODO: Add admin keys here
+        unsigned char adminKey1[12] = {0xFF, 0xFF, 0xFF, 0xFF, 0xFF, 0xFF, 0xFF, 0xFF, 0xFF, 0xFF, 0xFF, 0xFF};
+        unsigned char adminKey2[12] = {0xCC, 0xCC, 0xCC, 0xCC, 0xCC, 0xCC, 0xCC, 0xCC, 0xCC, 0xCC, 0xCC, 0xCC};
+        addKey(adminKey1);
+        addKey(adminKey2);
 
-        EEPROM.commit();
+        // EEPROM.commit();
 
     } else {
         numberOfKeys = EEPROM.read(INITGUARD_LENGTH);
@@ -65,17 +69,18 @@ bool KeyPersistenceService::addKey(const KeyID& key) {
     }
 
     EEPROM.put(usedEEPROMSize, key);
-    numberOfKeys++;
-    EEPROM.write(INITGUARD_LENGTH, numberOfKeys);
+    EEPROM.write(INITGUARD_LENGTH, numberOfKeys + 1);
 
-    return EEPROM.commit();
+    bool success = EEPROM.commit();
+    if (success) numberOfKeys++;
+    return success;
 }
 
 bool KeyPersistenceService::keyExistsInFirstNEntries(const KeyID& key, unsigned int N) const {
     unsigned int addr = INITGUARD_LENGTH + 1;
     KeyID currentKey = {0};
 
-    for (unsigned int i = 0; i < numberOfKeys; i++) {
+    for (unsigned int i = 0; i < N; i++) {
         EEPROM.get(addr, currentKey);
 
         if (currentKey == key) {
