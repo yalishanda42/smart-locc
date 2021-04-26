@@ -12,7 +12,6 @@ Lock lock(D0);
 
 void setup()
 {
-  srand(time(NULL));
   lock.init();
   current.init();
 }
@@ -27,7 +26,9 @@ void loop(){
   DisplayConfig::displayKeyAddedMessage(current);
   delay(2500);
   DisplayConfig::displayDoorUnlockedMessage(current);
-  lock.unlock(2500);
+  lock.unlock();
+  delay(2500);
   DisplayConfig::displayDoorLockedMessage(current);
+  lock.lock();
   delay(2500);
 }

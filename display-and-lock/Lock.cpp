@@ -14,10 +14,14 @@ void Lock::unlock(int timeBeforeLock) {
 	this->locked = false;
 	if (timeBeforeLock != 0) {
 		delay(timeBeforeLock);
-		digitalWrite(this->pin, HIGH);
-		this->locked = true;
+		this->lock();
 	}
 } 
+
+void Lock::lock() {
+	digitalWrite(this->pin, HIGH);
+	this->locked = true;
+}
 
 bool Lock::isLocked() const{
 	return this->locked;

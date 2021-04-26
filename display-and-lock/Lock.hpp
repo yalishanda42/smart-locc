@@ -12,6 +12,7 @@ class Lock {
 
 		void init();
 		void unlock(int timeBeforeLock = 0);
+		void lock();
 		bool isLocked() const;
 };
 
