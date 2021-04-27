@@ -1,8 +1,3 @@
-// Uncomment the following line if you are using NodeMCU
-// #include "nodemcu.h"
-
-//#include <ESP8266WiFi.h>
-
 #include <Bounce2.h>
 #include "StateManager.hpp"
 
