@@ -1,11 +1,17 @@
 // Uncomment the following line if you are using NodeMCU
-//#include "nodemcu.h"
+// #include "nodemcu.h"
 
 //#include <ESP8266WiFi.h>
 
+#include <Bounce2.h>
 #include "StateManager.hpp"
 
+/// Make sure the button pin has an internal pullup resistor
+#define BUTTON_PIN D6
+Bounce2::Button button;
+
 StateManager stateManager;
+DeviceState lastState = INITIAL;
 
 void setup() {
     Serial.begin(115200);
@@ -18,6 +24,11 @@ void setup() {
     Serial.print(" ");
     Serial.println((int)EEPROM.read(3));
 
+    // Button setup
+    button.attach(BUTTON_PIN, INPUT_PULLUP);
+    button.interval(50); // debounce in milliseconds
+    button.setPressedState(HIGH);
+
     // TODO
     // ...
     //
@@ -28,7 +39,26 @@ void setup() {
 
 void loop() {
     stateManager.setCurrentTime(millis());
-    // TODO
+    const DeviceState currentState = stateManager.getState();
+    if (currentState != lastState) {
+        lastState = currentState;
+        Serial.print("STATE -> ");
+        Serial.println(currentState);
+
+        // TODO: update lock state, display info, etc
+        // ...
+        //
+
+    }
+
+    button.update();
+    if (button.pressed() && currentState == DeviceState::IDLE) {
+        Serial.println("BUTTON PRESSED");
+        stateManager.beginAddingNewKey();
+        return;
+    }
+
+    // TODO: detect authorization attempt
     // ...
     //
 }

@@ -41,6 +41,8 @@ public:
 
     void setupDidFinish();
 
+    void beginAddingNewKey();
+
     void authorize(const KeyID&);
 
 private:

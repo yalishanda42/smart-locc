@@ -63,6 +63,10 @@ void StateManager::setupDidFinish() {
     setState(IDLE);
 }
 
+void StateManager::beginAddingNewKey() {
+    setState(WAITING_ADMIN_AUTH);
+}
+
 void StateManager::authorize(const KeyID& id) {
     if (state == IDLE) {
         bool keyIsAllowed = keyService.keyIsAuthorized(id);
