@@ -2,7 +2,12 @@
 #include "StateManager.hpp"
 
 /// Make sure the button pin has an internal pullup resistor
+#if defined(ESP8266)
 #define BUTTON_PIN D6
+#elif defined(ESP32)
+#define BUTTON_PIN 4
+#endif
+
 Bounce2::Button button;
 
 StateManager stateManager;
