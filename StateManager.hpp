@@ -1,6 +1,9 @@
 #ifndef __STATE_MANAGER__HPP__
 #define __STATE_MANAGER__HPP__
 
+#include "KeyPersistenceService.hpp"
+#include <Arduino.h>
+
 enum DeviceState {
     INITIAL,
 
@@ -17,9 +20,6 @@ enum DeviceState {
 /// Should hold milliseconds
 typedef unsigned long DeviceTime;
 
-// TODO
-// typedef unsigned char KeyID[10];
-
 class StateManager
 {
 public:
@@ -32,7 +32,7 @@ public:
     DeviceState getState() const;
 
     /// Current state display message
-    const char* getStateMessage() const;
+    String getStateMessage() const;
 
     /// Locked or unlocked
     bool isLocked() const;
@@ -41,13 +41,16 @@ public:
 
     void setupDidFinish();
 
-    // TODO
-    // void authorize(KeyID);
+    void beginAddingNewKey();
+
+    void authorize(const KeyID&);
 
 private:
     DeviceState state;
     DeviceTime lastStateUpdateTime;
     DeviceTime currentTime;
+
+    KeyPersistenceService keyService;
 
     void setState(DeviceState);
 
