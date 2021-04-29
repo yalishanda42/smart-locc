@@ -4,6 +4,7 @@ StateManager::StateManager()
     : state(INITIAL)
     , lastStateUpdateTime(0)
     , currentTime(0)
+    , keyService(KeyPersistenceService())
 {}
 
 void StateManager::setCurrentTime(DeviceTime time) {
@@ -25,7 +26,7 @@ DeviceState StateManager::getState() const {
     return state;
 }
 
-const char* StateManager::getStateMessage() const {
+String StateManager::getStateMessage() const {
     // TODO: Finaliza texts
     switch (state)
     {
@@ -62,9 +63,24 @@ void StateManager::setupDidFinish() {
     setState(IDLE);
 }
 
-// void StateManager::authorize(KeyID id) {
+void StateManager::beginAddingNewKey() {
+    setState(WAITING_ADMIN_AUTH);
+}
 
-// }
+void StateManager::authorize(const KeyID& id) {
+    if (state == IDLE) {
+        bool keyIsAllowed = keyService.keyIsAuthorized(id);
+        setState(keyIsAllowed ? AUTHORIZED : AUTH_FAILURE);
+
+    } else if (state == WAITING_ADMIN_AUTH) {
+        bool keyIsAdmin = keyService.keyIsAdmin(id);
+        setState(keyIsAdmin ? WAITING_NEW_KEY_AUTH : AUTH_FAILURE);
+
+    } else if (state == WAITING_NEW_KEY_AUTH) {
+        bool result = keyService.addKey(id);
+        setState(result ? NEW_KEY_AUTH_SUCCESS : AUTH_FAILURE);
+    }
+}
 
 void StateManager::setState(DeviceState newState)
 {
