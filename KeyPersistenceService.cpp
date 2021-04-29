@@ -1,20 +1,5 @@
 #include "KeyPersistenceService.hpp"
 
-KeyID::KeyID(const unsigned char bytes[KEY_SIZE_BYTES]) {
-    for (unsigned int i = 0; i < KEY_SIZE_BYTES; i++) {
-        this->bytes[i] = bytes[i];
-    }
-}
-
-bool KeyID::operator==(const KeyID& rhs) const {
-    for (unsigned int i = 0; i < KEY_SIZE_BYTES; i++) {
-        if (bytes[i] != rhs.bytes[i]) {
-            return false;
-        }
-    }
-    return true;
-}
-
 const char KeyPersistenceService::INITGUARD[INITGUARD_LENGTH + 1] = "key";
 
 const unsigned char KeyPersistenceService::ADMIN_KEYS[NUMBER_OF_ADMIN_KEYS][KEY_SIZE_BYTES] = {
