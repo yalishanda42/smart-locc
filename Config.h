@@ -1,6 +1,6 @@
-#define TOPIC "/v1.6/devices/esp32-dht"
-#define VARIABLE_LABEL_TEMPERATURE "temperature"
-#define VARIABLE_LABEL_HUMIDITY "humidity"
+#define TOPIC "/v1.6/devices/lock"
+#define VARIABLE_LABEL_UNSUCCESSFUL "unsuccessful-attempts"
+#define VARIABLE_LABEL_SUCCESSFUL "successful-attempts"
 
 #define MQTT_SERVER "industrial.api.ubidots.com"
 #define MQTT_PORT 1883

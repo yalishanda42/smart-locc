@@ -26,7 +26,7 @@ void setup()
     Serial.println("Booting up...");
 
     // WiFi connectivity setup
-    Serial.print("Connecting to ");    
+    Serial.print("Connecting to ");
     wm.autoConnect();
 
     // Just for EEPROM debug purposes:
@@ -76,6 +76,13 @@ void loop()
         // TODO: update lock state, display info, etc
         // ...
         //
+        if (currentState == DeviceState::AUTHORIZED || currentState == DeviceState::AUTH_FAILURE)
+        {
+            char data[250];
+            sprintf(data, "{\"%s\":{\"value\":1}}",
+                    currentState == DeviceState::AUTHORIZED ? VARIABLE_LABEL_UNSUCCESSFUL : VARIABLE_LABEL_UNSUCCESSFUL);
+            client.publish(TOPIC, data);
+        }
     }
 
     button.update();
