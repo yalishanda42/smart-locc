@@ -61,9 +61,6 @@ void loop()
     {
         client.loop();
     }
-    delay(2000);
-
-    // -----------------------------------------------------
 
     stateManager.setCurrentTime(millis());
     const DeviceState currentState = stateManager.getState();
@@ -76,12 +73,11 @@ void loop()
         // TODO: update lock state, display info, etc
         // ...
         //
+        
         if (currentState == DeviceState::AUTHORIZED || currentState == DeviceState::AUTH_FAILURE)
         {
-            char data[250];
-            sprintf(data, "{\"%s\":{\"value\":1}}",
-                    currentState == DeviceState::AUTHORIZED ? VARIABLE_LABEL_UNSUCCESSFUL : VARIABLE_LABEL_UNSUCCESSFUL);
-            client.publish(TOPIC, data);
+            String data = "{\"" + String(currentState == DeviceState::AUTHORIZED ? VARIABLE_LABEL_SUCCESSFUL : VARIABLE_LABEL_UNSUCCESSFUL) + "\":{\"value\":1}}";
+            client.publish(TOPIC, data.c_str());
         }
     }
 
