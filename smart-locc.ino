@@ -1,5 +1,8 @@
 #include <Bounce2.h>
+#include <WiFiManager.h>
+#include <PubSubClient.h>
 #include "StateManager.hpp"
+#include "Config.h"
 
 /// Make sure the button pin has an internal pullup resistor
 #if defined(ESP8266)
@@ -13,9 +16,18 @@ Bounce2::Button button;
 StateManager stateManager;
 DeviceState lastState = INITIAL;
 
-void setup() {
+WiFiManager wm;
+WiFiClient espClient;
+PubSubClient client(MQTT_SERVER, MQTT_PORT, espClient);
+
+void setup()
+{
     Serial.begin(115200);
     Serial.println("Booting up...");
+
+    // WiFi connectivity setup
+    Serial.print("Connecting to ");
+    wm.autoConnect();
 
     // Just for EEPROM debug purposes:
     Serial.print((char)EEPROM.read(0));
@@ -37,10 +49,23 @@ void setup() {
     Serial.println("Booted up.");
 }
 
-void loop() {
+void loop()
+{
+    if (!client.connected())
+    {
+        Serial.print("Reconnecting to server...");
+        bool connected = client.connect(CLIENT_ID, USER_TOKEN, PASS);
+        Serial.println(connected ? "success" : "failure");
+    }
+    else
+    {
+        client.loop();
+    }
+
     stateManager.setCurrentTime(millis());
     const DeviceState currentState = stateManager.getState();
-    if (currentState != lastState) {
+    if (currentState != lastState)
+    {
         lastState = currentState;
         Serial.print("STATE -> ");
         Serial.println(currentState);
@@ -48,11 +73,17 @@ void loop() {
         // TODO: update lock state, display info, etc
         // ...
         //
-
+        
+        if (currentState == DeviceState::AUTHORIZED || currentState == DeviceState::AUTH_FAILURE)
+        {
+            String data = "{\"" + String(currentState == DeviceState::AUTHORIZED ? VARIABLE_LABEL_SUCCESSFUL : VARIABLE_LABEL_UNSUCCESSFUL) + "\":{\"value\":1}}";
+            client.publish(TOPIC, data.c_str());
+        }
     }
 
     button.update();
-    if (button.pressed() && currentState == DeviceState::IDLE) {
+    if (button.pressed() && currentState == DeviceState::IDLE)
+    {
         Serial.println("BUTTON PRESSED");
         stateManager.beginAddingNewKey();
         return;
