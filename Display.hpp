@@ -1,5 +1,5 @@
-#ifndef DISPLAY_HPP
-#define DISPLAY_HPP
+#ifndef __DISPLAY__HPP__
+#define __DISPLAY__HPP__
 
 #include "LiquidCrystal_I2C.h"
 
