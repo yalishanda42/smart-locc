@@ -23,6 +23,9 @@
 #define BUTTON_PIN D8
 #elif defined(ESP32)
 #define BUTTON_PIN 4
+#define LOCK_PIN 0
+#define SDA_PIN 2
+#define SCL_PIN 1
 #endif
 
 Display display(0x27, 16, 2);
