@@ -2,14 +2,7 @@
 #define __KEY_PERSISTENCE_SERVICE__HPP__
 
 #include <EEPROM.h>
-
-#define KEY_SIZE_BYTES 12
-struct KeyID {
-    unsigned char bytes[KEY_SIZE_BYTES];
-
-    KeyID(const unsigned char[KEY_SIZE_BYTES]);
-    bool operator==(const KeyID &) const;
-};
+#include "KeyID.hpp"
 
 class KeyPersistenceService
 {
@@ -18,7 +11,7 @@ class KeyPersistenceService
     static const unsigned int INITGUARD_LENGTH = 3;
     static const char INITGUARD[INITGUARD_LENGTH + 1];
 
-    static const unsigned int NUMBER_OF_ADMIN_KEYS = 2;
+    static const unsigned int NUMBER_OF_ADMIN_KEYS = 1;
     static const unsigned char ADMIN_KEYS[NUMBER_OF_ADMIN_KEYS][KEY_SIZE_BYTES];
 
     unsigned char numberOfKeys;

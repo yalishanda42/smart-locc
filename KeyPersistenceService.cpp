@@ -1,25 +1,9 @@
 #include "KeyPersistenceService.hpp"
 
-KeyID::KeyID(const unsigned char bytes[KEY_SIZE_BYTES]) {
-    for (unsigned int i = 0; i < KEY_SIZE_BYTES; i++) {
-        this->bytes[i] = bytes[i];
-    }
-}
-
-bool KeyID::operator==(const KeyID& rhs) const {
-    for (unsigned int i = 0; i < KEY_SIZE_BYTES; i++) {
-        if (bytes[i] != rhs.bytes[i]) {
-            return false;
-        }
-    }
-    return true;
-}
-
 const char KeyPersistenceService::INITGUARD[INITGUARD_LENGTH + 1] = "key";
 
 const unsigned char KeyPersistenceService::ADMIN_KEYS[NUMBER_OF_ADMIN_KEYS][KEY_SIZE_BYTES] = {
-    {0xFF, 0xFF, 0xFF, 0xFF, 0xFF, 0xFF, 0xFF, 0xFF, 0xFF, 0xFF, 0xFF, 0xFF},
-    {0xCC, 0xCC, 0xCC, 0xCC, 0xCC, 0xCC, 0xCC, 0xCC, 0xCC, 0xCC, 0xCC, 0xCC},
+    {0x0A, 0x06, 0xF6, 0x3F, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00}
 };
 
 KeyPersistenceService::KeyPersistenceService() : numberOfKeys(0) {
@@ -81,17 +65,17 @@ bool KeyPersistenceService::addKey(const KeyID& key) {
 
 bool KeyPersistenceService::keyExistsInFirstNEntries(const KeyID& key, unsigned int N) const {
     unsigned int addr = INITGUARD_LENGTH + 1;
-    KeyID currentKey = {0};
+    unsigned char bytes[KEY_SIZE_BYTES] = {0};
+    KeyID currentKey{bytes};
 
     for (unsigned int i = 0; i < N; i++) {
         EEPROM.get(addr, currentKey);
-
         if (currentKey == key) {
             return true;
         }
 
         addr += KEY_SIZE_BYTES;
     }
-
+    
     return false;
 }
