@@ -142,7 +142,7 @@ void loop()
     }
 
     button.update();
-    if (button.pressed())
+    if (button.pressed() && currentState == DeviceState::IDLE)
     {
         Serial.println("BUTTON PRESSED");
         stateManager.beginAddingNewKey();
