@@ -9,7 +9,6 @@ void RFIDReader::init() {
 }
 
 bool RFIDReader::tryReadingPICC() {
-
 	//return false if no new card present on the reader
 	if (!this->rfid.PICC_IsNewCardPresent()) {
 		return false;

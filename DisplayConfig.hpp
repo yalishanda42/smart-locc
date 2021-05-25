@@ -11,7 +11,6 @@ class DisplayConfig {
 		static void displayKeyAddedMessage(Display& display);
 		static void displayDoorUnlockedMessage(Display& display);
 		static void displayNotAuthorizedMessage(Display& display);
-		static void displayDoorUnlockedMessage(Display& display);
 };
 
 #endif

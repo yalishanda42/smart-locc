@@ -1,5 +1,5 @@
-#ifndef RFIDREADER_HPP
-#define RFIDREADER_HPP
+#ifndef __RFIDREADER__HPP__
+#define __RFIDREADER__HPP__
 
 #include <MFRC522.h>
 #include "KeyID.hpp"

@@ -8,6 +8,7 @@
 #include "Lock.hpp"
 #include "Display.hpp"
 #include "DisplayConfig.hpp"
+#include "RFIDReader.hpp"
 
 #define TIME_UNTIL_TEMP_MEASURE 5000
 /// Make sure the button pin has an internal pullup resistor
@@ -18,18 +19,23 @@
  * LOCK PIN - D0
  */
 #define LOCK_PIN D0
+#define READER_SDA D4
+#define RST_PIN D3
 #define SDA_PIN D2
 #define SCL_PIN D1
 #define BUTTON_PIN D8
 #elif defined(ESP32)
 #define BUTTON_PIN 4
 #define LOCK_PIN 0
+#define READER_SDA 5
+#define RST_PIN 6
 #define SDA_PIN 2
 #define SCL_PIN 1
 #endif
 
 Display display(0x27, 16, 2);
 Lock lock(LOCK_PIN);
+RFIDReader reader{READER_SDA, RST_PIN};
 
 unsigned long lastTemperatureMeasure = 0;
 
@@ -69,10 +75,10 @@ void setup()
 
     // Temperature and Humidity Sensor
     Wire.begin(SDA_PIN, SCL_PIN);
-    // TODO
-    // ...
-    //
 
+    // Reader
+    reader.init();
+    
     stateManager.setupDidFinish();
     Serial.println("Booted up.");
 
@@ -82,6 +88,7 @@ void setup()
 
 void loop()
 {
+  
     if (!client.connected())
     {
         Serial.print("Reconnecting to server...");
@@ -92,7 +99,7 @@ void loop()
     {
         client.loop();
     }
-
+  
     stateManager.setCurrentTime(millis());
     const DeviceState currentState = stateManager.getState();
 
@@ -106,10 +113,6 @@ void loop()
         lastState = currentState;
         Serial.print("STATE -> ");
         Serial.println(currentState);
-
-        // TODO: update lock state, display info, etc
-        // ...
-        //
 
         switch(currentState) {
             case DeviceState::IDLE:
@@ -149,7 +152,8 @@ void loop()
         return;
     }
 
-    // TODO: detect authorization attempt
-    // ...
-    //
+    bool wasPICCRead = reader.tryReadingPICC();
+    if (wasPICCRead) {
+        stateManager.authorize(reader.getUID());
+    }
 }
