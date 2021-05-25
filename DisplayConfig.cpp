@@ -25,9 +25,9 @@ void DisplayConfig::displayKeyAddedMessage(Display& display) {
 }
 
 void DisplayConfig::displayNotAuthorizedMessage(Display& display) {
-  display.clear();
-  display.print("Authorization");
-  display.print("failed", 1);
+	display.clear();
+	display.print("Authorization");
+	display.print("failed", 1);
 }
 
 void DisplayConfig::displayDoorUnlockedMessage(Display& display) {
