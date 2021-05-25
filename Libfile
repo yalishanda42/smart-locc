@@ -1,3 +1,6 @@
 Bounce2
 EspSoftwareSerial
 LiquidCrystal I2C
+WiFiManager
+PubSubClient
+Sodaq_SHT2x

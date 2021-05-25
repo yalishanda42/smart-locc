@@ -28,6 +28,9 @@ public:
     /// Call this at the beginning of every loop
     void setCurrentTime(DeviceTime);
 
+    /// Get current time
+    DeviceTime getCurrentTime() const;
+
     /// Current device state (TODO: do we need a getter?)
     DeviceState getState() const;
 

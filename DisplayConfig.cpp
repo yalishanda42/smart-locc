@@ -2,8 +2,8 @@
 
 void DisplayConfig::displayTemperatureAndHumidity(Display& display, int temperature, int humidity) {
 	display.clear();
-	display.print((String{"Temp: " } + temperature).c_str());
-	display.print((String{ "Humidity: " } + humidity).c_str(), 1);
+	display.print((String{"Temperature: " } + temperature + "C").c_str());
+	display.print((String{ "Humidity: " } + humidity + "%").c_str(), 1);
 }
 
 void DisplayConfig::displayAdminKeyMessage(Display& display) {
@@ -24,9 +24,10 @@ void DisplayConfig::displayKeyAddedMessage(Display& display) {
 	display.print("now authorized.", 1);
 }
 
-void DisplayConfig::displayDoorLockedMessage(Display& display) {
-	display.clear();
-	display.print("Door locked!");
+void DisplayConfig::displayNotAuthorizedMessage(Display& display) {
+  display.clear();
+  display.print("Authorization");
+  display.print("failed", 1);
 }
 
 void DisplayConfig::displayDoorUnlockedMessage(Display& display) {

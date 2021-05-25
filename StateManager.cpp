@@ -22,6 +22,10 @@ void StateManager::setCurrentTime(DeviceTime time) {
     }
 }
 
+DeviceTime StateManager::getCurrentTime() const {
+    return currentTime;
+}
+
 DeviceState StateManager::getState() const {
     return state;
 }

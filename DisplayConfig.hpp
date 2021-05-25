@@ -9,7 +9,7 @@ class DisplayConfig {
 		static void displayAdminKeyMessage(Display& display);
 		static void displayNewKeyAuthMessage(Display& display);
 		static void displayKeyAddedMessage(Display& display);
-		static void displayDoorLockedMessage(Display& display);
+    static void displayNotAuthorizedMessage(Display& display);
 		static void displayDoorUnlockedMessage(Display& display);
 };
 
