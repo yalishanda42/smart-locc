@@ -26,7 +26,7 @@
 #endif
 
 Display display(0x27, 16, 2);
-Lock lock(D0);
+Lock lock(LOCK_PIN);
 
 unsigned long lastTemperatureMeasure = 0;
 
@@ -65,7 +65,7 @@ void setup()
     display.init();
 
     // Temperature and Humidity Sensor
-    Wire.begin(D2, D1);
+    Wire.begin(SDA_PIN, SCL_PIN);
     // TODO
     // ...
     //
