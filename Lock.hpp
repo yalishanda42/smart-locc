@@ -1,5 +1,5 @@
-#ifndef LOCK_HPP
-#define LOCK_HPP
+#ifndef __LOCK_HPP__
+#define __LOCK_HPP__
 
 class Lock {
 	private:
