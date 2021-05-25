@@ -1,10 +1,7 @@
 Bounce2
 EspSoftwareSerial
 LiquidCrystal I2C
-<<<<<<< HEAD
 MFRC522
-=======
 WiFiManager
 PubSubClient
 Sodaq_SHT2x
->>>>>>> master
