@@ -49,6 +49,8 @@ bool KeyPersistenceService::keyIsAdmin(const KeyID& key) const {
 }
 
 bool KeyPersistenceService::addKey(const KeyID& key) {
+    if (keyIsAuthorized(key)) return false;
+
     unsigned int usedEEPROMSize = INITGUARD_LENGTH + 1 + (numberOfKeys * KEY_SIZE_BYTES);
     if (EEPROM_LENGTH - usedEEPROMSize < KEY_SIZE_BYTES) {
         // No enough space available for a new key!
@@ -76,6 +78,6 @@ bool KeyPersistenceService::keyExistsInFirstNEntries(const KeyID& key, unsigned 
 
         addr += KEY_SIZE_BYTES;
     }
-    
+
     return false;
 }
