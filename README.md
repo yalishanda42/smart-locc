@@ -26,6 +26,8 @@
     <a href="https://github.com/allexks/smart-locc/pulls">
         <img alt="GitHub pull requests" src="https://img.shields.io/github/issues-pr/allexks/smart-locc?color=0088ff" />
     </a>
+    <img alt="Supports ESP8266 and ESP32" src="https://img.shields.io/badge/supports-ESP8266%20%7C%20ESP32-blue" />
+
 </p>
 
 <!-- TABLE OF CONTENTS -->
@@ -85,6 +87,7 @@ To get it up and running follow these simple steps.
    ```sh
    git clone https://github.com/allexks/smart-locc.git
    ```
+3. Install the necessary libraries listed in the `Libfile` (one way is to use `arduino-cli` and run `./install-libs.sh`)
 2. Connect the sensors as shown below and upload it to the ESP8266/ESP32
 
 <!-- USAGE -->
