@@ -98,7 +98,7 @@ To get it up and running follow these simple steps.
 
 ## Roadmap
 
-See the [open issues](https://github.com/github_username/repo_name/issues) for a list of proposed features (and known issues).
+See the [open issues](https://github.com/allexks/smart-locc/issues) for a list of proposed features (and known issues).
 
 ## Contributing
 
