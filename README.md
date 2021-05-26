@@ -122,3 +122,5 @@ The project follows the [Contributor Covenant](http://contributor-covenant.org/v
 </a>
 
 ## License
+
+[MIT](LICENSE)
