@@ -29,28 +29,28 @@
 </p>
 
 <!-- TABLE OF CONTENTS -->
-<details open="open">
-  <summary><h2 style="display: inline-block">Table of Contents</h2></summary>
-  <ol>
+<summary>
+    <h2 style="display: inline-block">Table of Contents</h2>
+</summary>
+<ol>
     <li>
-      <a href="#about-the-project">About The Project</a>
+        <a href="#about-the-project">About The Project</a>
     </li>
     <li>
-      <a href="#getting-started">Getting Started</a>
-      <ul>
-        <li><a href="#prerequisites">Prerequisites</a></li>
-        <li><a href="#installation">Installation</a></li>
-      </ul>
+        <a href="#getting-started">Getting Started</a>
+        <ul>
+            <li><a href="#prerequisites">Prerequisites</a></li>
+            <li><a href="#installation">Installation</a></li>
+        </ul>
     </li>
     <li><a href="#usage">Usage</a></li>
     <li><a href="#roadmap">Roadmap</a></li>
     <li><a href="#contributing">Contributing</a></li>
     <ul>
         <li><a href="#contribors">Contributors</a></li>
-      </ul>
-    <li><a href="#license">License</a></li></li>
-  </ol>
-</details>
+    </ul>
+    <li><a href="#license">License</a></li>
+</ol>
 
 <!-- ABOUT THE PROJECT -->
 
