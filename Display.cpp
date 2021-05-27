@@ -1,6 +1,5 @@
 #include "Display.hpp"
 #include <string.h>
-#include <SoftwareSerial.h>
 
 Display::Display(const unsigned int& address, int columns, int lines) :
 	lcd{ address, columns, lines },
@@ -22,9 +21,6 @@ void Display::clear() {
 
 void Display::print(const char* str, int line, int column) {
 	int currStrLen = strlen(str);
-	if (currStrLen + column > this->columns) {
-		Serial.println(String{ "String " } + "\"" + str + "\"" + " will be concatenated on printing");
-	}
 	this->currentColumn = currStrLen;
 	this->currentLine = line;
 	this->lcd.setCursor(column, line);
@@ -33,9 +29,6 @@ void Display::print(const char* str, int line, int column) {
 
 void Display::append(const char* str) {
 	int currStrLen = strlen(str);
-	if (currStrLen + this->currentColumn > this->columns) {
-		Serial.println(String{ "String " } + "\"" + str + "\"" + " will be concatenated on appending");
-	}
 	this->currentColumn += currStrLen;
 	this->lcd.print(str);
 }
