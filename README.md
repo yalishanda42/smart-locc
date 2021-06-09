@@ -96,6 +96,7 @@ To get it up and running follow these simple steps.
 
 <img src="images/lock1.jpg" alt="Lock" width="250" height="250">
 <img src="images/lock2.jpg" alt="Lock" width="250" height="250">
+<img src="images/states.png" alt="State Machine">
 
 <!-- ROADMAP -->
 
