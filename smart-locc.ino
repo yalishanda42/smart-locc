@@ -17,6 +17,7 @@
  * Temp/Humidity SENSOR PINS - VIN, GND, D2 - SDA, D1 - SCL
  * DISPLAY PINS - VIN, GND, D2 - SDA, D1 - SCL
  * LOCK PIN - D0
+ * RFID READER PINS - D4 - SDA, D5 - SCK, D7 - MOSI, D6 - MISO, D3 - RST
  */
 #define LOCK_PIN D0
 #define READER_SDA D4
